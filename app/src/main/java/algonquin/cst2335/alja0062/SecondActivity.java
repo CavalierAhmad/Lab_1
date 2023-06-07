@@ -3,8 +3,12 @@ package algonquin.cst2335.alja0062;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
@@ -13,16 +17,38 @@ public class SecondActivity extends AppCompatActivity {
 
     // Declaring views
     private TextView textview;
+    private EditText edittext;
+    private Button callBtn;
+    private ImageView imageView;
+    private Button pictureBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        // Boilerplate
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_second);
 
-        Intent fromPrevious = getIntent();
-        String emailAddress = fromPrevious.getStringExtra("EmailAddress");
-        textview = findViewById(R.id.textView);
-        textview.setText("Welcome back " + emailAddress);
+        // Email address sent from first page
+            Intent fromPrevious = getIntent();
+            String emailAddress = fromPrevious.getStringExtra("EmailAddress");
+
+        // Find views by ID
+            textview = findViewById(R.id.textView);
+            edittext = findViewById(R.id.editTextPhone);
+            callBtn = findViewById(R.id.callBtn);
+            imageView = findViewById(R.id.imageView);
+            pictureBtn = findViewById(R.id.pictureBtn);
+
+        // Storing string entered in first page to display in second page
+            textview.setText("Welcome back " + emailAddress);
+
+        // EVENTS
+            callBtn.setOnClickListener( clk-> {
+                Intent call = new Intent(Intent.ACTION_DIAL);
+                String phoneNumber = edittext.getText().toString();
+                call.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(call);
+            });
     }
 
     @Override
