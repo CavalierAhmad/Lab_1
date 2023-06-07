@@ -18,34 +18,45 @@
 
     <EditText
         android:id="@+id/editTextPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="151dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="phone"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="79dp" />
+        app:layout_constraintEnd_toStartOf="@+id/callBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:autofillHints="Hint: phone number"
+        android:hint="Phone number"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/callBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="272dp"
-        tools:layout_editor_absoluteY="84dp" />
+        android:text="CALL NUMBER"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/editTextPhone"
+        app:layout_constraintTop_toTopOf="@+id/editTextPhone" />
+
+    <Button
+        android:id="@+id/pictureBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CHANGE PICTURE"
+        app:layout_constraintEnd_toEndOf="@+id/callBtn"
+        app:layout_constraintStart_toStartOf="@+id/callBtn"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="172dp" />
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPhone"
+        app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="270dp"
-        tools:layout_editor_absoluteY="175dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
