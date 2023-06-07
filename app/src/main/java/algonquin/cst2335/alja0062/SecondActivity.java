@@ -1,15 +1,26 @@
 package algonquin.cst2335.alja0062;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.Manifest;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -21,6 +32,12 @@ public class SecondActivity extends AppCompatActivity {
     private Button callBtn;
     private ImageView imageView;
     private Button pictureBtn;
+
+    // for permission
+    private Intent cameraIntent; // Declare cameraIntent as a member variable
+
+    // Declare the ActivityResultLauncher as a member variable
+    private ActivityResultLauncher<Intent> cameraResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +59,54 @@ public class SecondActivity extends AppCompatActivity {
         // Storing string entered in first page to display in second page
             textview.setText("Welcome back " + emailAddress);
 
+        // Register the ActivityResultLauncher outside the click listener
+        cameraResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            Bitmap thumbnail = data.getParcelableExtra("data");
+                            imageView.setImageBitmap(thumbnail);
+                        }
+                    }
+                }
+        );
+
         // EVENTS
-            callBtn.setOnClickListener( clk-> {
-                Intent call = new Intent(Intent.ACTION_DIAL);
-                String phoneNumber = edittext.getText().toString();
-                call.setData(Uri.parse("tel:" + phoneNumber));
-                startActivity(call);
-            });
+            // Make calls
+                callBtn.setOnClickListener( clk-> {
+                    Intent call = new Intent(Intent.ACTION_DIAL);
+                    String phoneNumber = edittext.getText().toString();
+                    call.setData(Uri.parse("tel:" + phoneNumber));
+                    startActivity(call);
+                });
+            // Change picture
+                pictureBtn.setOnClickListener( clk-> {
+                    cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if(checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                            // Launch the camera activity using the ActivityResultLauncher
+                            cameraResultLauncher.launch(cameraIntent);
+                        else
+                            requestPermissions(new String[] {Manifest.permission.CAMERA}, 20);
+                    }
+                });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 20) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, start the camera intent
+                startActivity(cameraIntent);
+            } else {
+                // Permission denied, show a message or take alternative action
+            }
+        }
     }
 
     @Override
