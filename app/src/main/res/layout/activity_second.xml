@@ -21,14 +21,14 @@
         android:layout_width="151dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
+        android:autofillHints="Hint: phone number"
         android:ems="10"
+        android:hint="Phone number"
         android:inputType="phone"
         app:layout_constraintEnd_toStartOf="@+id/callBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:autofillHints="Hint: phone number"
-        android:hint="Phone number"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/callBtn"
@@ -45,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CHANGE PICTURE"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/callBtn"
         app:layout_constraintStart_toStartOf="@+id/callBtn"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
@@ -53,10 +54,9 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextPhone"
         app:layout_constraintStart_toStartOf="@+id/editTextPhone"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        tools:layout_editor_absoluteY="165dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
