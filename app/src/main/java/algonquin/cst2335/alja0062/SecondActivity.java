@@ -2,17 +2,20 @@ package algonquin.cst2335.alja0062;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 public class SecondActivity extends AppCompatActivity {
 
-    private static String tag;
+    private static String tag = "SecondActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+        Intent fromPrevious = getIntent();
     }
 
     @Override
