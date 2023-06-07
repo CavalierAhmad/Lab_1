@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
 
     private static String tag = "SecondActivity";
+
+    // Declaring views
+    private TextView textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +20,9 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         Intent fromPrevious = getIntent();
+        String emailAddress = fromPrevious.getStringExtra("EmailAddress");
+        textview = findViewById(R.id.textView);
+        textview.setText("Welcome back " + emailAddress);
     }
 
     @Override
