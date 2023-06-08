@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +33,10 @@ import java.io.IOException;
 public class SecondActivity extends AppCompatActivity {
 
     private static String tag = "SecondActivity";
+
+    //Shared Preferences
+    private SharedPreferences prefs;
+
 
     // Declaring views
     private TextView textview;
@@ -120,6 +125,12 @@ public class SecondActivity extends AppCompatActivity {
             Bitmap theImage = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageView.setImageBitmap(theImage);
         }
+
+        //Shared_Preferences
+        prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String phoneNumber = prefs.getString("PhoneNumber", "");
+        edittext.setText(phoneNumber);
+
     }
 
     @Override
@@ -153,6 +164,12 @@ public class SecondActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         Log.w(tag,"The application no longer responds to user input");
+
+        //Shared Preferences
+        String phoneNumber = edittext.getText().toString();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("PhoneNumber", phoneNumber);
+        editor.apply();
     }
 
     @Override
