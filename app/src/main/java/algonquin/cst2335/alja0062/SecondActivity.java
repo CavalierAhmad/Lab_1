@@ -56,7 +56,7 @@ public class SecondActivity extends AppCompatActivity {
             Intent fromPrevious = getIntent();
             String emailAddress = fromPrevious.getStringExtra("EmailAddress");
 
-        // Find views by ID
+        // Find views by ID - NEXT TIME USE BINDING
             textview = findViewById(R.id.textView);
             edittext = findViewById(R.id.editTextPhone);
             callBtn = findViewById(R.id.callBtn);
