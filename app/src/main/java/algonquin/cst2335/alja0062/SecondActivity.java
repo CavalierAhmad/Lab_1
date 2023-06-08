@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.Manifest;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -69,13 +76,26 @@ public class SecondActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             Bitmap thumbnail = data.getParcelableExtra("data");
                             imageView.setImageBitmap(thumbnail);
+                            FileOutputStream fOut = null;
+                            try {
+                                fOut = openFileOutput("Picture.png", Context.MODE_PRIVATE);
+                                thumbnail.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                                fOut.flush();
+                                fOut.close();
+                            }
+                            catch (FileNotFoundException e)
+                            {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
         );
 
         // EVENTS
-            // Make calls
+            // Send number to phone
                 callBtn.setOnClickListener( clk-> {
                     Intent call = new Intent(Intent.ACTION_DIAL);
                     String phoneNumber = edittext.getText().toString();
@@ -94,6 +114,12 @@ public class SecondActivity extends AppCompatActivity {
                             requestPermissions(new String[] {Manifest.permission.CAMERA}, 20);
                     }
                 });
+
+        File file = new File(getFilesDir(), "Picture.png");
+        if (file.exists()) {
+            Bitmap theImage = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap(theImage);
+        }
     }
 
     @Override
