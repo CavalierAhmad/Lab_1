@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         butt.setOnClickListener(clk -> {
             String password = edit.getText().toString();
-            checkPasswordComplexity(password);
+            boolean valid = checkPasswordComplexity(password);
+            if (valid){text.setText("Your password meets all the requirement");}
+                else {text.setText("You shall not pass!");}
         });
 
     }
