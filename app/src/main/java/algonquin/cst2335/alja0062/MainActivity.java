@@ -10,9 +10,21 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * TODO
+ * @author Ahmad Al-Jabbouri
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /** Binds all the widgets to single variable */
     private ActivityMainBinding widgets;
+    /** Holds the text at center of the screen */
+    private TextView text = null;
+    /** Holds the editable text field under text */
+    private EditText edit = null;
+    /** This holds the clickable button under edit */
+    private Button butt = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
         widgets = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(widgets.getRoot());
 
-
-        TextView text = widgets.text;
-        EditText edit = widgets.edit;
-        Button butt = widgets.btn;
+        text = widgets.text;
+        edit = widgets.edit;
+        butt = widgets.btn;
 
         butt.setOnClickListener(clk -> {
             String password = edit.getText().toString();
