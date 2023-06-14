@@ -6,6 +6,14 @@ android {
     namespace 'algonquin.cst2335.alja0062'
     compileSdk 33
 
+    /* FOR VARIABLE BINDING */
+    buildFeatures {
+        viewBinding true
+    }
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "algonquin.cst2335.alja0062"
         minSdk 22
@@ -25,6 +33,25 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+/**
+ * FOR JAVADOC
+ */
+android.applicationVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+
+        source = variant.javaCompile.source
+        destinationDir = file("$rootDir/javadoc/")
+        failOnError false
+
+        doFirst {
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+            options.addStringOption "-show-members", "package"
+        }
     }
 }
 
