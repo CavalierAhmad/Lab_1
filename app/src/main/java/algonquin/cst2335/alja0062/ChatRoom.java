@@ -1,13 +1,21 @@
 package algonquin.cst2335.alja0062;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import algonquin.cst2335.alja0062.databinding.ActivityChatRoomBinding;
 
 public class ChatRoom extends AppCompatActivity {
+
+    class RowHolder extends RecyclerView.ViewHolder {
+        public RowHolder(@NonNull View itemView){
+            super(itemView);
+        }
+    }
 
     ActivityChatRoomBinding binding;
 
@@ -18,6 +26,6 @@ public class ChatRoom extends AppCompatActivity {
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         // load variables
-        binding.list.setAdapter(new RecyclerView.Adapter<>());
+        binding.list.setAdapter(new RecyclerView.Adapter<RowHolder>());
     }
 }
