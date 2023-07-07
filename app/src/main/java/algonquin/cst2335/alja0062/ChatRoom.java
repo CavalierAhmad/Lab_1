@@ -2,6 +2,7 @@ package algonquin.cst2335.alja0062;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -37,17 +38,19 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // variable binding section
+        // VARIABLE BINDING SECTION
             binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
             setContentView(binding.getRoot());
 
-        // events
+        // EVENTS SECTION
             // "Send" button
-            binding.send.setOnClickListener(click -> {
-                messages.add(binding.textField.getText().toString());
-                adapter.notifyItemInserted(messages.size()-1);
-                binding.textField.setText(""); // clear text
-            });
+                binding.send.setOnClickListener(click -> {
+                    messages.add(binding.textField.getText().toString());
+                    adapter.notifyItemInserted(messages.size()-1);
+                    binding.list.setLayoutManager(new LinearLayoutManager(this));
+                    binding.textField.setText(""); // clear text
+                });
+            // "Receive" button
 
         // LIST ADAPTER SECTION
         binding.list.setAdapter(adapter = new RecyclerView.Adapter<RowHolder>() {
