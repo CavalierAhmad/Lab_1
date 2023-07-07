@@ -47,7 +47,7 @@ public class ChatRoom extends AppCompatActivity {
                 binding.send.setOnClickListener(click -> {
                     messages.add(binding.textField.getText().toString());
                     adapter.notifyItemInserted(messages.size()-1);
-                    binding.list.setLayoutManager(new LinearLayoutManager(this));
+                    binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
                     binding.textField.setText(""); // clear text
                 });
             // "Receive" button
