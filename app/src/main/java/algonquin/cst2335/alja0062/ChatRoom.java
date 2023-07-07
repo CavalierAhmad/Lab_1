@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import algonquin.cst2335.alja0062.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.alja0062.databinding.SentMessageBinding;
@@ -32,7 +34,8 @@ public class ChatRoom extends AppCompatActivity {
 
     // This ChatRoom attributes
         ActivityChatRoomBinding binding;
-        ArrayList<String> messages;
+        //ArrayList<String> messages;
+        ArrayList<ChatMessage> messages;
         ChatRoomViewModel chatModel;
         private RecyclerView.Adapter adapter;
 
@@ -54,12 +57,26 @@ public class ChatRoom extends AppCompatActivity {
         // EVENTS SECTION
             // "Send" button
                 binding.send.setOnClickListener(click -> {
-                    messages.add(binding.textField.getText().toString());
+                    messages.add(new ChatMessage(
+                            binding.textField.getText().toString(),
+                            new SimpleDateFormat("EE, dd-MMM-yyyy hh-mm-ss a").format(new Date()),
+                            true
+                            ));
                     adapter.notifyItemInserted(messages.size()-1);
                     binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
                     binding.textField.setText(""); // clear text
                 });
             // "Receive" button
+                binding.receive.setOnClickListener(click -> {
+                    messages.add(new ChatMessage(
+                            binding.textField.getText().toString(),
+                            new SimpleDateFormat("EE, dd-MMM-yyyy hh-mm-ss a").format(new Date()),
+                            false
+                    ));
+                    adapter.notifyItemInserted(messages.size()-1);
+                    binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
+                    binding.textField.setText(""); // clear text
+                });
 
         // LIST ADAPTER SECTION
         binding.list.setAdapter(adapter = new RecyclerView.Adapter<RowHolder>() {
@@ -73,9 +90,9 @@ public class ChatRoom extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(@NonNull RowHolder holder, int position) {
-                String obj = messages.get(position);
-                holder.message.setText(obj);
-                holder.time.setText("");
+                ChatMessage obj = messages.get(position);
+                holder.message.setText(obj.getMessage());
+                holder.time.setText(obj.getTime());
             }
 
             @Override
@@ -85,8 +102,9 @@ public class ChatRoom extends AppCompatActivity {
 
             @Override
             public int getItemViewType(int position) {
-                return 0;
+                return messages.get(position).isSent() ? 0 : 1;
             }
+
         });
     }
 }

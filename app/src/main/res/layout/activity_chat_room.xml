@@ -35,7 +35,17 @@
         app:layout_constraintTop_toTopOf="@+id/send"
         app:layout_constraintBottom_toBottomOf="@+id/send"
         app:layout_constraintStart_toEndOf="@id/send"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/receive"
         />
+
+    <Button
+        android:id="@+id/receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Receive"
+        app:layout_constraintTop_toTopOf="@id/send"
+        app:layout_constraintBottom_toBottomOf="@id/send"
+        app:layout_constraintStart_toEndOf="@id/textField"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
