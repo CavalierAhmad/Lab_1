@@ -2,6 +2,7 @@ package algonquin.cst2335.alja0062;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,12 +32,20 @@ public class ChatRoom extends AppCompatActivity {
 
     // This ChatRoom attributes
         ActivityChatRoomBinding binding;
-        ArrayList<String> messages = new ArrayList<>();
+        ArrayList<String> messages;
+        ChatRoomViewModel chatModel;
         private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // For rotation survivability
+            chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+            messages = chatModel.messages.getValue();
+            if (messages == null){
+                chatModel.messages.postValue(messages = new ArrayList<String>());
+            }
 
         // VARIABLE BINDING SECTION
             binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
