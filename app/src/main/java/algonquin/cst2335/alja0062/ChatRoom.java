@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import algonquin.cst2335.alja0062.databinding.ActivityChatRoomBinding;
+import algonquin.cst2335.alja0062.databinding.ReceiveMessageBinding;
 import algonquin.cst2335.alja0062.databinding.SentMessageBinding;
 
 public class ChatRoom extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class ChatRoom extends AppCompatActivity {
             chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
             messages = chatModel.messages.getValue();
             if (messages == null){
-                chatModel.messages.postValue(messages = new ArrayList<String>());
+                chatModel.messages.postValue(messages = new ArrayList<ChatMessage>());
             }
 
         // VARIABLE BINDING SECTION
@@ -84,8 +85,14 @@ public class ChatRoom extends AppCompatActivity {
             @NonNull
             @Override
             public RowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                SentMessageBinding binding = SentMessageBinding.inflate(getLayoutInflater());
-                return new RowHolder(binding.getRoot());
+                if (viewType == 0){
+                    SentMessageBinding binding = SentMessageBinding.inflate(getLayoutInflater());
+                    return new RowHolder(binding.getRoot());
+                } else {
+                    ReceiveMessageBinding binding = ReceiveMessageBinding.inflate(getLayoutInflater());
+                    return new RowHolder(binding.getRoot());
+                }
+
             }
 
             @Override
