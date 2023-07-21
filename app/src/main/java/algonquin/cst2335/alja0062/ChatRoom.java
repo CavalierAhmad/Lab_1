@@ -1,6 +1,7 @@
 package algonquin.cst2335.alja0062;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,16 @@ public class ChatRoom extends AppCompatActivity {
 
             public RowHolder(@NonNull View itemView){
                 super(itemView);
+
+                itemView.setOnClickListener(clk ->{
+                    int position = getAbsoluteAdapterPosition();
+                    AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
+                    builder.setMessage("Do you want to delete the message: " + message.getText());
+                    builder.setTitle("Question:");
+                    builder.setPositiveButton("Yes",(dialog, cl) -> { });
+                    builder.setNegativeButton("No",(dialog, cl) -> { });
+                });
+
                 message = itemView.findViewById(R.id.message);
                 time = itemView.findViewById(R.id.time);
             }
