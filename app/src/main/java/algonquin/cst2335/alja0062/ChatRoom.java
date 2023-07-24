@@ -3,6 +3,7 @@ package algonquin.cst2335.alja0062;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,7 +65,8 @@ public class ChatRoom extends AppCompatActivity {
                             true
                             ));
                     adapter.notifyItemInserted(messages.size()-1);
-                    binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
+                    //binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
+                    binding.list.setLayoutManager(new GridLayoutManager(this, 1));
                     binding.textField.setText(""); // clear text
                 });
             // "Receive" button
@@ -75,7 +77,8 @@ public class ChatRoom extends AppCompatActivity {
                             false
                     ));
                     adapter.notifyItemInserted(messages.size()-1);
-                    binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
+                    //binding.list.setLayoutManager(new LinearLayoutManager(this)); // display messages
+                    binding.list.setLayoutManager(new GridLayoutManager(this, 1));
                     binding.textField.setText(""); // clear text
                 });
 
