@@ -35,6 +35,7 @@ public class ChatMessage {
     public String getTime() {return time;}
 
     public boolean isSent() {return isSent;}
-}
 
+    public int getId() {return id;}
+}
 //done
