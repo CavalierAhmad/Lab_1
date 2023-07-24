@@ -128,7 +128,7 @@ public class ChatRoom extends AppCompatActivity {
                 }
             }
         });
-        chatModel.messages.observe(this, (newMessageValue) -> {
+        chatModel.selectedMessage.observe(this, (newMessageValue) -> {
             MessageDetailsFragment chatFragment = new MessageDetailsFragment(newMessageValue);
 
             FragmentManager fMgr = getSupportFragmentManager();
